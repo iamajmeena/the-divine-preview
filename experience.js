@@ -3,13 +3,15 @@ import {sequence} from './frames.mjs';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config=window.DIVINE_CONFIG||{}, systemMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let chosenMotion=null;try{chosenMotion=sessionStorage.getItem('divine-motion');}catch{}
-const motion={matches:chosenMotion?chosenMotion==='calm':systemMotion.matches};
+// Cinematic by default, whatever the OS animation setting says; visitors can still pick calm viewing.
+const motion={matches:chosenMotion==='calm'};
+const lenis=(!motion.matches&&window.Lenis)?new Lenis():null;
 const light=matchMedia('(max-width:900px)').matches||navigator.connection?.saveData||/2g/.test(navigator.connection?.effectiveType||'');
 const tier=light?'lq':'hq';
 let state=selection(),bhk=0,comparisons=[],lastFocus=null,activeOverlay=null,currentModule='tower',hubSeq=null;
 try {state=selection(JSON.parse(sessionStorage.getItem('divine-selection')||'{}'));} catch {}
 const fmt=n=>n.toLocaleString('en-IN',{maximumFractionDigits:2,minimumFractionDigits:2});
-const jump=(id,p=0)=>{const el=$(id);if(el)window.scrollTo({top:el.offsetTop+Math.max(0,el.offsetHeight-innerHeight)*p,behavior:motion.matches?'instant':'smooth'});};
+const jump=(id,p=0)=>{const el=$(id);if(!el)return;const y=el.offsetTop+Math.max(0,el.offsetHeight-innerHeight)*p;if(lenis)lenis.scrollTo(y,{duration:id==='#tour'?3:1.6});else window.scrollTo({top:y,behavior:'instant'});};
 function save(patch){state=selection({...state,...patch});try{sessionStorage.setItem('divine-selection',JSON.stringify(state));}catch{}sync();}
 function send3d(data){const f=$('#frame3d');if(f?.contentWindow&&f.getAttribute('src'))f.contentWindow.postMessage({divine:'selection',...state,...data},location.origin);}
 function sync(){
@@ -48,7 +50,6 @@ document.addEventListener('click',e=>{
 });
 // Optional cinematic route: no full-film preload or blocking splash screen.
 document.documentElement.classList.toggle('reduce-motion',motion.matches);
-systemMotion.addEventListener('change',()=>location.reload());
 $('#motionToggle').textContent=motion.matches?'Enable cinematic scrolling':'Use calm viewing';
 $('#motionToggle').onclick=()=>{try{sessionStorage.setItem('divine-motion',motion.matches?'cinematic':'calm');}catch{}location.reload();};
 const scenes=[];
@@ -67,8 +68,9 @@ $('#rotateLeft').onclick=()=>{angle=Math.max(0,angle-.08);orbit.set(angle);};
 $('#rotateRight').onclick=()=>{angle=Math.min(1,angle+.08);orbit.set(angle);};
 $('#viewer').onkeydown=e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();angle=Math.max(0,Math.min(1,angle+(e.key==='ArrowRight'?.04:-.04)));orbit.set(angle);}};
 let updateNeeded=true;
-addEventListener('scroll',()=>updateNeeded=true,{passive:true});addEventListener('resize',()=>updateNeeded=true);
-function tick(){
+addEventListener('scroll',()=>updateNeeded=true,{passive:true});lenis?.on('scroll',()=>updateNeeded=true);addEventListener('resize',()=>updateNeeded=true);
+function tick(t){
+ lenis?.raf(t);
  if(updateNeeded){scenes.forEach(({section,seq,chapters,name})=>{
   const r=section.getBoundingClientRect(),p=Math.max(0,Math.min(1,-r.top/Math.max(1,section.offsetHeight-innerHeight)));
   seq.set(motion.matches?(name==='rise'?.9:name==='tour'?.45:.3):p);
@@ -83,8 +85,8 @@ const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isInters
 const navObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)$$('.nav a').forEach(a=>a.classList.toggle('on',a.hash==='#'+e.target.id));}),{rootMargin:'-20% 0px -60% 0px'});$$('section[id]').forEach(s=>navObserver.observe(s));
 // Shared explorer: preserve the selection and never silently substitute a flat.
 const hub=$('#view3d'),frame=$('#frame3d');
-function openOverlay(el){if(activeOverlay)closeOverlay(false);lastFocus=document.activeElement;activeOverlay=el;el.hidden=false;document.body.style.overflow='hidden';$$('body > :not(.modal):not(.view3d):not(script)').forEach(n=>n.inert=true);el.querySelector('button')?.focus();}
-function closeOverlay(restore=true){if(!activeOverlay)return;activeOverlay.hidden=true;activeOverlay=null;hubSeq?.dispose();hubSeq=null;document.body.style.overflow='';$$('body > [inert]').forEach(n=>n.inert=false);send3d({active:false});if(restore)lastFocus?.focus();}
+function openOverlay(el){if(activeOverlay)closeOverlay(false);lastFocus=document.activeElement;activeOverlay=el;el.hidden=false;document.body.style.overflow='hidden';lenis?.stop();$$('body > :not(.modal):not(.view3d):not(script)').forEach(n=>n.inert=true);el.querySelector('button')?.focus();}
+function closeOverlay(restore=true){if(!activeOverlay)return;activeOverlay.hidden=true;activeOverlay=null;hubSeq?.dispose();hubSeq=null;document.body.style.overflow='';lenis?.start();$$('body > [inert]').forEach(n=>n.inert=false);send3d({active:false});if(restore)lastFocus?.focus();}
 function openExplorer(module='tower'){openOverlay(hub);showModule(module);}
 function showModule(module){
  currentModule=module;hubSeq?.dispose();hubSeq=null;
