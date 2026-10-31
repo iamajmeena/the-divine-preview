@@ -8,13 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="luxe.css?v=2">
-<link rel="stylesheet" href="experience.css?v=3">
+<link rel="stylesheet" href="experience.css?v=5">
 </head><body>
 
 <a class="skip-link" href="#picker">Skip to home selection</a><noscript><p class="no-js">Interactive previews need JavaScript. Brochure plans, project details and amenities remain below.</p></noscript>
 <div class="demo-tag">Private concept preview</div>
 <button class="top-cta" data-visit>Book a site visit</button>
-<nav class="nav" aria-label="Explore The Divine"><a href="#story" class="on">Tower</a><a href="#tour">Inside</a><a href="#picker">Flats</a><a href="#visit">Visit</a><button class="nav3d" id="open3d">Explore</button></nav>
+<nav class="nav" aria-label="Explore The Divine"><a href="#story" class="on">Tower</a><a href="#picker">Flats</a><a href="#visit">Visit</a><button class="nav3d" id="open3d">Explore in 3D</button></nav>
 
 <section id="story">
   <div class="stage">
@@ -23,12 +23,12 @@
       <p class="eyebrow">Atun, Bhilwara</p>
       <h1 class="logo">The Divine</h1>
       <p class="lead">Where Life Rises Above the Ordinary</p>
-      <p class="hero-facts">3 &amp; 4 BHK · Atun, Bhilwara</p><div class="row"><a class="btn" href="#picker">Find your home</a><button class="btn ghost" data-open-module="tower">Explore the project</button></div><button id="motionToggle" class="text-button">Viewing mode</button>
+      <p class="hero-facts">3 &amp; 4 BHK · Atun, Bhilwara</p><div class="row"><a class="btn" href="#picker">Find your home</a><button class="btn ghost" data-open-module="inside">Explore in 3D</button></div><button id="motionToggle" class="text-button">Viewing mode</button>
     </div>
     <div class="chapter" data-from=".07" data-to=".14"><h2>It begins on<br>200 Feet Ring Road</h2><p>Near CA Circle, Atun.</p></div>
     <div class="chapter" data-from=".17" data-to=".4"><h2>Two towers rise</h2><p>Block A and Block B. 3 and 4 BHK. 10 ft ceilings.</p></div>
     <div class="chapter" data-from=".46" data-to=".6"><h2>Two towers.<br>One address.</h2><p>Joined by a bridge in the sky.</p></div>
-    <div class="chapter" data-from=".68" data-to="1.01"><h2 class="gold">Life rises here</h2><p>Keep scrolling. Step inside a home.</p><button class="btn" data-visit>Book a site visit</button></div>
+    <div class="chapter" data-from=".68" data-to="1.01"><h2 class="gold">Life rises here</h2><p>Keep scrolling. Step inside a home.</p><button class="btn" data-visit>Book a site visit</button> <button class="btn ghost" data-open-module="inside">Explore in 3D</button></div>
     <div class="note">Concept film · artist’s impression.</div>
     <div class="floorpick" id="floorPick" role="group" aria-label="Choose your floor">
       <p class="eyebrow">Choose your floor</p>
@@ -37,38 +37,6 @@
       <p class="small on-dark">Choose a floor, then find your favourite plan.</p>
       <button class="btn" id="stepIn">Choose a plan</button>
     </div>
-  </div>
-</section>
-
-<section id="tour">
-  <div class="stage">
-    <canvas id="tourCanvas"></canvas>
-        <div class="chapter" data-from=".03" data-to=".24"><h2>Sample A-103, 3 BHK</h2><p>Carpet 1,032.97 sq ft</p></div>
-    <div class="chapter" data-from=".41" data-to=".56"><h2>Drawing / Dining</h2><p>20′ × 14′6″</p></div>
-    <div class="chapter" data-from=".63" data-to=".74"><h2>Bedroom</h2><p>11′ × 13′</p></div>
-    <div class="chapter" data-from=".87" data-to="1.01"><h2>Second bedroom</h2><p>Like this home?</p><button class="btn" data-visit data-interest="A-103">Enquire about A-103</button></div>
-    <div class="note">Concept interior · illustrative layout and décor.</div>
-    <div class="unit-card" id="unitCard"><b>Sample A-103 · 3 BHK</b><span>Carpet 1,032.97 sq ft</span><button class="btn" data-visit data-interest="A-103">Enquire</button></div>
-    <div class="rooms-nav" id="roomsNav">
-      <a href="#picker">← Your selection</a><button data-room=".45">Living</button><button data-room=".72">Bedroom 1</button><button data-room=".94">Bedroom 2</button>
-    </div>
-  </div>
-</section>
-
-<section id="shell">
-  <div class="stage split">
-    <div class="phoneframe"><canvas id="shellCanvas"></canvas></div>
-    <div class="split-text">
-      <p class="eyebrow">From plan to home</p>
-      <h2>Bare concrete to a finished living room</h2>
-      <ol class="steps">
-        <li class="step" data-from="0" data-to=".3"><b>01</b><span>Bare concrete</span></li>
-        <li class="step" data-from=".3" data-to=".64"><b>02</b><span>The finishes go in</span></li>
-        <li class="step" data-from=".64" data-to="1.01"><b>03</b><span>It becomes a home</span></li>
-      </ol>
-      <button class="btn" data-visit>Book a site visit</button>
-    </div>
-    <div class="note">Artist's impression, AI-generated. Furniture and décor are indicative and not part of delivery. Specifications as per the Agreement for Sale.</div>
   </div>
 </section>
 
@@ -83,20 +51,6 @@
       <div><b>16</b><span>homes on a typical floor</span></div>
     </div>
     <p class="small on-dark reveal">As per the project brochure. Carpet areas from the typical floor plans.</p>
-  </div>
-</section>
-
-<section id="home" class="dark">
-  <div class="wrap">
-    <p class="eyebrow reveal">A-103, 3 BHK. Carpet 1,032.97 sq ft</p>
-    <h2 class="title reveal">Turn it. See every room.</h2>
-    <div class="viewer reveal" id="viewer" tabindex="0" role="group" aria-label="Illustrative A-103 orbit. Drag or use left and right arrow keys.">
-      <canvas id="orbit"></canvas>
-      <div class="drag-hint" id="dragHint">Drag to rotate · illustrative</div>
-    </div>
-    <div class="row"><button class="btn ghost" id="rotateLeft" aria-label="Rotate left">← Rotate</button><button class="btn ghost" id="rotateRight" aria-label="Rotate right">Rotate →</button><button class="btn" data-open-module="plan">View floor plan</button></div>
-    <div class="plan-reference"><div><p class="eyebrow">Designed around life</p><h3>A-103 in the brochure</h3><p>See how the living spaces connect, with the original brochure layout beside the concept tour.</p><ul><li>Drawing / dining: 20′ × 14′6″</li><li>Two bedrooms: 11′ × 13′ each</li><li>Kitchen: 10′ × 8′</li></ul></div><svg viewBox="280 475 580 305" role="img" aria-label="Brochure crop showing the A-103 layout"><image href="assets/floor_a.jpg" width="1375" height="1638"/></svg></div>
-    <p class="small on-dark reveal">Artist's impression, AI-assisted from the brochure plan and renders. Furniture, décor and finishes are indicative and may not be part of delivery. Final specifications as per Agreement for Sale and RERA filing.</p>
     <details class="deliv reveal"><summary>What is delivered, as per the brochure</summary>
       <ul><li>Vitrified tiles (Kajaria / Johnson / Orient or equivalent). Anti-skid tiles in bathrooms.</li>
       <li>Wooden doors and frames. Good quality interior paint.</li>
@@ -173,7 +127,7 @@
 
 <div class="view3d" id="view3d" role="dialog" aria-modal="true" aria-label="Project explorer" hidden>
  <header class="hub-header"><div><b>The Divine · Explorer</b><p id="explorerSelection"></p></div><button id="close3d" class="hub-close" aria-label="Close explorer">×</button></header>
- <nav class="hub-tabs" aria-label="Explorer modules"><button data-module="tower">Tower</button><button data-module="plan">Floor plan</button><button data-module="dollhouse">Dollhouse</button><button data-module="inside">Inside</button><button data-module="amenities">Amenities</button><button data-module="location">Location</button></nav>
+ <nav class="hub-tabs" aria-label="Explorer modules"><button data-module="inside">Walk inside</button><button data-module="dollhouse">Dollhouse</button><button data-module="spatial">Site 3D model</button></nav>
  <iframe id="frame3d" title="Illustrative tower and demo floor view" allow="fullscreen"></iframe><div id="hubContent" class="hub-content"></div>
 </div>
 
@@ -206,5 +160,5 @@
 
 <script src="vendor/lenis.min.js"></script>
 <script src="config.js"></script>
-<script type="module" src="experience.js?v=4"></script>
+<script type="module" src="experience.js?v=5"></script>
 </body></html>

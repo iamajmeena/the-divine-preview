@@ -9,7 +9,7 @@ button:disabled{opacity:.55;cursor:wait}
 .nav{max-width:calc(100vw - 24px)}
 .nav a,.nav button{min-height:44px;display:flex;align-items:center;justify-content:center}
 .demo-tag{color:#d0c5ac;letter-spacing:.1em}
-#aerial{height:240vh}#story{height:1100vh}#tour{height:900vh}#shell{height:320vh}
+#aerial{height:240vh}#story{height:760vh}#tour{height:900vh}#shell{height:320vh}
 .stage{background:#0b1424}
 .stage canvas{background-size:cover;background-position:center;}
 .stage canvas[data-ready=true]{background-image:none!important}
@@ -61,7 +61,7 @@ table{width:100%;border-collapse:collapse;background:#111b2a;font-size:14px}th,t
  .nav a,.nav button{padding:8px;font-size:10px;letter-spacing:.06em;margin:0;flex:1}
  .demo-tag{display:block;left:14px;top:20px;font-size:9px;letter-spacing:0;max-width:140px}
  .top-cta{font-size:10px;letter-spacing:.05em;min-height:44px;right:14px}
- #aerial{height:190vh}#story{height:900vh}#tour{height:700vh}#shell{height:260vh}
+ #aerial{height:190vh}#story{height:620vh}#tour{height:700vh}#shell{height:260vh}
  .chapter{top:18vh;left:24px;right:24px;max-width:none}.chapter h2{font-size:clamp(36px,8vw,56px)}
  .chapter .row{max-width:340px}.chapter .btn{font-size:10px;padding:12px 18px}
  .note{bottom:82px;left:18px;max-width:calc(100vw - 36px);font-size:10px}
@@ -79,3 +79,6 @@ table{width:100%;border-collapse:collapse;background:#111b2a;font-size:14px}th,t
 @media(max-width:420px){.units{grid-template-columns:repeat(2,1fr)}.filters{gap:12px}.chip,.tab{padding:10px 14px}.unit-card{bottom:185px}.plan-marker{font-size:8px;min-width:34px}.hub-tabs{gap:6px}}
 .reduce-motion *{animation:none!important;transition:none!important}.reduce-motion .reveal,.reduce-motion .stagger>*{opacity:1;transform:none}.reduce-motion .stage{position:relative}
 html:not(.js) .chapter:first-of-type{opacity:1;visibility:visible}html:not(.js) .chapter:first-of-type>*{opacity:1;transform:none}
+
+.hub-viewer.big{height:clamp(300px,62vh,720px)}.scrub-row{display:flex;align-items:center;gap:14px;margin:14px 0}.scrub-row .scrub-label{flex:1;margin:0}.scrub-row .chip{min-width:84px}
+@media(max-width:760px){.hub-viewer.big{height:clamp(240px,46vh,420px)}}

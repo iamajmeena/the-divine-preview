@@ -1,4 +1,4 @@
-import {FLATS,FRAMES,findFlat,selection,selectionLabel,normalizeMobile,visitDates,MARKERS} from './model.mjs';
+import {FLATS,FRAMES,findFlat,selection,selectionLabel,normalizeMobile,visitDates,MARKERS} from './model.mjs?v=5';
 import {sequence} from './frames.mjs?v=4';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config=window.DIVINE_CONFIG||{}, systemMotion=matchMedia('(prefers-reduced-motion: reduce)');
@@ -8,6 +8,7 @@ const motion={matches:chosenMotion==='calm'};
 const lenis=(!motion.matches&&window.Lenis)?new Lenis():null;
 const light=matchMedia('(max-width:900px)').matches||navigator.connection?.saveData||/2g/.test(navigator.connection?.effectiveType||'');
 const tier=(light||innerWidth<1700)?'lq':'hq';
+const INSIDE_START=96; // tour frame where the camera reaches the balcony
 let state=selection(),bhk=0,comparisons=[],lastFocus=null,activeOverlay=null,currentModule='tower',hubSeq=null;
 try {state=selection(JSON.parse(sessionStorage.getItem('divine-selection')||'{}'));} catch {}
 const fmt=n=>n.toLocaleString('en-IN',{maximumFractionDigits:2,minimumFractionDigits:2});
@@ -59,14 +60,6 @@ for(const [id,name] of [['story','rise'],['tour','tour'],['shell','shell']]){
  const seq=sequence(canvas,name,FRAMES[name],{tier,reduced:motion.matches});
  scenes.push({section,seq,name,chapters:[...section.querySelectorAll('.chapter,.step')]});
 }
-const orbit=sequence($('#orbit'),'orbit',FRAMES.orbit,{tier,fit:true,reduced:motion.matches});
-let angle=0,drag=null;
-$('#viewer').onpointerdown=e=>{drag=e.clientX;$('#viewer').setPointerCapture(e.pointerId);};
-$('#viewer').onpointermove=e=>{if(drag===null)return;angle=Math.max(0,Math.min(1,angle+(drag-e.clientX)/Math.max(250,$('#viewer').clientWidth)));drag=e.clientX;orbit.set(angle);$('#dragHint').hidden=true;};
-$('#viewer').onpointerup=$('#viewer').onpointercancel=()=>{drag=null;};
-$('#rotateLeft').onclick=()=>{angle=Math.max(0,angle-.08);orbit.set(angle);};
-$('#rotateRight').onclick=()=>{angle=Math.min(1,angle+.08);orbit.set(angle);};
-$('#viewer').onkeydown=e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();angle=Math.max(0,Math.min(1,angle+(e.key==='ArrowRight'?.04:-.04)));orbit.set(angle);}};
 let updateNeeded=true;
 addEventListener('scroll',()=>updateNeeded=true,{passive:true});lenis?.on('scroll',()=>updateNeeded=true);addEventListener('resize',()=>updateNeeded=true);
 function tick(t){
@@ -78,16 +71,16 @@ function tick(t){
   if(name==='rise'){$('#floorPick').classList.toggle('on',motion.matches||p>.66);$('#floorPick').inert=!(motion.matches||p>.66);}
   if(name==='tour'){$('#roomsNav').classList.add('on');$('#unitCard').classList.add('on');}
  });updateNeeded=false;}
- scenes.forEach(s=>s.seq.tick());orbit.tick();hubSeq?.tick();requestAnimationFrame(tick);
+ scenes.forEach(s=>s.seq.tick());hubSeq?.tick();requestAnimationFrame(tick);
 }tick();
-window.divineDiagnostics=()=>({tier,selection:{...state},frames:[...scenes.map(s=>s.seq.metrics),orbit.metrics]});
+window.divineDiagnostics=()=>({tier,selection:{...state},frames:[...scenes.map(s=>s.seq.metrics)]});
 const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');reveal.unobserve(e.target);}}),{threshold:.05});$$('.reveal,.stagger').forEach(el=>reveal.observe(el));
 const navObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)$$('.nav a').forEach(a=>a.classList.toggle('on',a.hash==='#'+e.target.id));}),{rootMargin:'-20% 0px -60% 0px'});$$('section[id]').forEach(s=>navObserver.observe(s));
 // Shared explorer: preserve the selection and never silently substitute a flat.
 const hub=$('#view3d'),frame=$('#frame3d');
 function openOverlay(el){if(activeOverlay)closeOverlay(false);lastFocus=document.activeElement;activeOverlay=el;el.hidden=false;document.body.style.overflow='hidden';lenis?.stop();$$('body > :not(.modal):not(.view3d):not(script)').forEach(n=>n.inert=true);el.querySelector('button')?.focus();}
 function closeOverlay(restore=true){if(!activeOverlay)return;activeOverlay.hidden=true;activeOverlay=null;hubSeq?.dispose();hubSeq=null;document.body.style.overflow='';lenis?.start();$$('body > [inert]').forEach(n=>n.inert=false);send3d({active:false});if(restore)lastFocus?.focus();}
-function openExplorer(module='tower'){openOverlay(hub);showModule(module);}
+function openExplorer(module='inside'){openOverlay(hub);showModule(module);}
 function showModule(module){
  currentModule=module;hubSeq?.dispose();hubSeq=null;
  $$('[data-module]').forEach(b=>{const on=b.dataset.module===module||(module==='spatial'&&b.dataset.module==='tower');b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
@@ -101,19 +94,32 @@ function showModule(module){
   const copy=$('#planFigure').cloneNode(true);copy.removeAttribute('id');copy.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));pane.append(copy);
   const go=document.createElement('button');go.className='btn';go.textContent='Change floor or compare plans';go.onclick=()=>{closeOverlay();jump('#picker');};pane.append(go);
  } else if(module==='inside'||module==='dollhouse'){
-  const sample=state.plan==='A-103';
-  pane.innerHTML=`<p class="eyebrow">A-103 · 3 BHK · Concept preview</p><h2>${module==='inside'?'Step inside.':'A home, from every angle.'}</h2>${sample?'':`<p>Your selection ${state.plan} is saved. Previewing sample home A-103.</p>`}<div class="hub-viewer"><canvas id="hubCanvas" aria-label="A-103 ${module==='inside'?'room tour':'rotating concept'}"></canvas></div><div class="row" id="hubRoomButtons"></div><label class="scrub-label">${module==='inside'?'Explore the rooms':'Rotate the home'}<input id="hubScrub" type="range" min="0" max="1000" value="${module==='inside'?450:0}"></label><div class="row"><button class="btn" data-visit data-interest="A-103">Enquire about A-103</button><button class="btn ghost" data-module="plan">View floor plan</button></div><p class="small">Artist’s impression. Final layouts and finishes will follow the approved plans.</p>`;
-  const name=module==='inside'?'tour':'orbit';hubSeq=sequence($('#hubCanvas'),name,FRAMES[name],{tier,fit:module==='dollhouse',reduced:motion.matches});hubSeq.set(module==='inside'?.45:0);
-  $('#hubScrub').oninput=e=>hubSeq.set(+e.target.value/1000);
-  if(module==='inside'){for(const [label,value] of [['Entrance',150],['Living / dining',450],['Bedroom 1',720],['Bedroom 2',940]]){const b=document.createElement('button');b.className='chip';b.textContent=label;b.onclick=()=>{$('#hubScrub').value=value;hubSeq.set(value/1000);};$('#hubRoomButtons').append(b);}}
-  else {let x=null;const c=$('#hubCanvas');c.onpointerdown=e=>{x=e.clientX;c.setPointerCapture(e.pointerId);};c.onpointermove=e=>{if(x===null)return;const slider=$('#hubScrub');slider.value=Math.max(0,Math.min(1000,+slider.value+(x-e.clientX)*2));x=e.clientX;hubSeq.set(+slider.value/1000);};c.onpointerup=c.onpointercancel=()=>x=null;}
- } else if(module==='amenities'){
+  const inside=module==='inside',sample=state.plan==='A-103',name=inside?'tour':'orbit',total=FRAMES[name],first=inside?INSIDE_START:0;
+  pane.innerHTML=`<p class="eyebrow">A-103 · 3 BHK · Concept preview</p><h2>${inside?'From the balcony, inside.':'A home, from every angle.'}</h2>${sample?'':`<p>Your selection ${state.plan} is saved. Previewing sample home A-103.</p>`}<div class="hub-viewer big"><canvas id="hubCanvas" aria-label="A-103 ${inside?'walk-through':'rotating concept'}"></canvas></div><div class="row" id="hubRoomButtons"></div><div class="scrub-row"><button class="chip" id="hubPlay"></button><label class="scrub-label">${inside?'Move through the home':'Rotate the home'}<input id="hubScrub" type="range" min="0" max="1000" value="0"></label></div><div class="row"><button class="btn" data-visit data-interest="A-103">Enquire about A-103</button><button class="btn ghost" data-module="plan">View floor plan</button></div><p class="small">Artist’s impression. Final layouts and finishes will follow the approved plans.</p>`;
+  const canvas=$('#hubCanvas'),slider=$('#hubScrub'),play=$('#hubPlay');
+  hubSeq=sequence(canvas,name,total,{tier,fit:!inside,reduced:motion.matches});
+  const setV=v=>{slider.value=v;hubSeq.set((first+(v/1000)*(total-1-first))/(total-1));};
+  let playing=false,last=0;const speed=inside?.036:.06;
+  const label=()=>{play.textContent=playing?'Pause':(+slider.value>=1000?'Replay':'Play');};
+  const stopPlay=()=>{playing=false;label();};
+  const step=t=>{if(!playing||!hubSeq)return;const dt=Math.min(60,t-last);last=t;const v=Math.min(1000,+slider.value+dt*speed);setV(v);if(v>=1000){stopPlay();return;}requestAnimationFrame(step);};
+  const startPlay=()=>{if(+slider.value>=1000)setV(0);playing=true;last=performance.now();label();requestAnimationFrame(step);};
+  play.onclick=()=>playing?stopPlay():startPlay();
+  slider.oninput=e=>{stopPlay();setV(+e.target.value);};
+  setV(0);label();
+  if(inside){
+   for(const [text,frame] of [['Balcony',INSIDE_START],['Living / dining',192],['Bedroom 1',336],['Bedroom 2',456]]){const b=document.createElement('button');b.className='chip';b.textContent=text;b.onclick=()=>{stopPlay();setV(Math.round((frame-first)/(total-1-first)*1000));};$('#hubRoomButtons').append(b);}
+  } else {
+   let x=null;canvas.onpointerdown=e=>{stopPlay();x=e.clientX;canvas.setPointerCapture(e.pointerId);};canvas.onpointermove=e=>{if(x===null)return;setV(Math.max(0,Math.min(1000,+slider.value+(x-e.clientX)*2)));x=e.clientX;};canvas.onpointerup=canvas.onpointercancel=()=>x=null;
+  }
+  if(!motion.matches)setTimeout(()=>{if(hubSeq&&currentModule===module&&+slider.value===0)startPlay();},700);
+} else if(module==='amenities'){
   pane.innerHTML='<p class="eyebrow">From the brochure</p><h2>Room for more.</h2>';pane.append($('#spaces .cards').cloneNode(true),$('#spaces .amen').cloneNode(true));pane.querySelector('.cards').classList.add('in');
  } else {
   pane.innerHTML='<p class="eyebrow">Atun, Bhilwara</p><h2>200 Feet Ring Road</h2><p>Near CA Circle. Explore the neighbourhood on the brochure map.</p>';pane.append($('#location .map').cloneNode(true));
  }
 }
-$('#open3d').onclick=()=>openExplorer();$('#close3d').onclick=()=>closeOverlay();
+$('#open3d').onclick=()=>openExplorer('inside');$('#close3d').onclick=()=>closeOverlay();
 frame.onload=()=>send3d({active:activeOverlay===hub&&currentModule==='spatial'});
 addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==frame.contentWindow)return;if(e.data?.divine==='ready')send3d({active:activeOverlay===hub&&currentModule==='spatial'});if(e.data?.divine==='floor')save({floor:e.data.floor});if(e.data?.divine==='enter')showModule('inside');if(e.data?.divine==='close')closeOverlay();});
 // Preview by default; success only after a configured server acknowledges receipt.
@@ -149,3 +155,14 @@ $('#editEnquiry').onclick=()=>{$('#mok').hidden=true;$('#mform').hidden=false;fo
 $$('[data-wa]').forEach(a=>{if(/^\d{10,15}$/.test(config.whatsapp)){a.hidden=false;a.href=`https://wa.me/${config.whatsapp}?text=${encodeURIComponent('Hello, I would like details about The Divine.')}`;}});
 $$('[data-call]').forEach(a=>{if(/^\d{10,15}$/.test(config.phone)){a.hidden=false;a.href='tel:+'+config.phone;}});
 sync();
+
+// Warm the walk-inside and dollhouse frames in the background once the first screen is settled.
+(function warm(){
+ if(navigator.connection?.saveData)return;
+ const pad=i=>String(i+1).padStart(3,'0'),urls=[];
+ for(let i=INSIDE_START;i<FRAMES.tour;i++)urls.push(`frames/${tier}/tour/${pad(i)}.webp`);
+ for(let i=0;i<FRAMES.orbit;i++)urls.push(`frames/${tier}/orbit/${pad(i)}.webp`);
+ let k=0,busy=0;const pump=()=>{while(busy<2&&k<urls.length){busy++;fetch(urls[k++]).then(r=>r.blob()).catch(()=>{}).finally(()=>{busy--;pump();});}};
+ const start=()=>setTimeout(pump,2500);
+ if(document.readyState==='complete')start();else addEventListener('load',()=>('requestIdleCallback' in window?requestIdleCallback(start,{timeout:6000}):start()));
+})();
