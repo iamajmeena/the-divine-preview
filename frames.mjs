@@ -38,10 +38,12 @@ export function sequence(canvas, name, count, {tier='lq',fit=false,onReady=()=>{
   }});
  }
  function want() { if(!near||disposed)return; const c=Math.round(target);request(c);for(let d=1;d<=radius;d++){request(c+d);request(c-d);}dispatch(); }
- function nearest(i) {let best=null,dist=Infinity;for(const [k,im] of cache){if(Math.abs(k-i)<dist){best=im;dist=Math.abs(k-i);}}return best;}
+ let lastKey=-1;
+ function nearest(i) {let bestK=-1,dist=Infinity;for(const k of cache.keys()){if(Math.abs(k-i)<dist){bestK=k;dist=Math.abs(k-i);}}
+  if(cache.has(lastKey)&&Math.abs(lastKey-i)<=dist+1)bestK=lastKey; lastKey=bestK; return cache.get(bestK)||null;}
  function paint(im,alpha=1){if(!im||!ctx)return;const w=im.width||im.naturalWidth,h=im.height||im.naturalHeight,s=fit?Math.min(canvas.width/w,canvas.height/h):Math.max(canvas.width/w,canvas.height/h);ctx.globalAlpha=alpha;ctx.drawImage(im,(canvas.width-w*s)/2,(canvas.height-h*s)/2,w*s,h*s);}
- function resize(){const d=Math.min(devicePixelRatio,tier==='lq'?1:1.5);canvas.width=Math.round(canvas.clientWidth*d);canvas.height=Math.round(canvas.clientHeight*d);dirty=true;}
- const observer=new IntersectionObserver(([entry])=>{near=entry.isIntersecting;epoch++;if(near){resize();want();dirty=true;}else{for(const im of cache.values())im.close?.();cache.clear();}}, {rootMargin:'150px 0px'});observer.observe(canvas);
+ function resize(){const d=Math.min(devicePixelRatio,tier==='lq'?1:1.5),w=Math.round(canvas.clientWidth*d),h=Math.round(canvas.clientHeight*d);if(Math.abs(w-canvas.width)<3&&Math.abs(h-canvas.height)<3&&canvas.width>0)return;canvas.width=w;canvas.height=h;dirty=true;const im=nearest(Math.round(shown));if(im){ctx.clearRect(0,0,w,h);paint(im);ctx.globalAlpha=1;dirty=false;}}
+ const observer=new IntersectionObserver(([entry])=>{near=entry.isIntersecting;epoch++;if(near){resize();want();dirty=true;}else{for(const im of cache.values())im.close?.();cache.clear();}}, {rootMargin:'120% 0px'});observer.observe(canvas);
  const sizes=new ResizeObserver(resize);sizes.observe(canvas);
  return {metrics,set(p){const next=Math.max(0,Math.min(1,p))*(count-1);if(Math.abs(next-target)>radius+2)epoch++;target=next;want();},tick(){if(!near||document.hidden||disposed)return;want();shown=reduced?target:shown+(target-shown)*.25;if(Math.abs(target-shown)>.02)dirty=true;if(!dirty||!cache.size)return;ctx.clearRect(0,0,canvas.width,canvas.height);paint(nearest(Math.round(shown)));ctx.globalAlpha=1;dirty=false;},retry(){failures.clear();want();},dispose(){disposed=true;near=false;epoch++;observer.disconnect();sizes.disconnect();for(const im of cache.values())im.close?.();cache.clear();dispatch();}};
 }

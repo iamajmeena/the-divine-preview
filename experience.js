@@ -1,5 +1,5 @@
 import {FLATS,FRAMES,findFlat,selection,selectionLabel,normalizeMobile,visitDates,MARKERS} from './model.mjs';
-import {sequence} from './frames.mjs?v=3';
+import {sequence} from './frames.mjs?v=4';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config=window.DIVINE_CONFIG||{}, systemMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let chosenMotion=null;try{chosenMotion=sessionStorage.getItem('divine-motion');}catch{}
