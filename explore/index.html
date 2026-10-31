@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Divine in 3D</title>
+<style>
+[hidden]{display:none!important}
+.light-mode{position:fixed;right:16px;top:68px;font-size:12px;color:#e4d4b2}.light-mode select{background:#102039;color:#fff;border:1px solid #ffffff44;padding:8px;border-radius:12px}
+.error-panel{padding:24px;max-width:420px;line-height:1.6}
+
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0b1424;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+#load{position:fixed;inset:0;display:grid;place-content:center;gap:14px;text-align:center;background:#0b1424;z-index:9;transition:opacity .8s}
+#load b{font:400 34px Georgia,serif;letter-spacing:.04em}#load i{display:block;width:180px;height:2px;background:#ffffff22;margin:auto;overflow:hidden}#load i u{display:block;height:100%;width:0;background:#d9b46a;transition:width .3s}
+.chip{position:fixed;left:16px;top:14px;background:#0b1424b3;backdrop-filter:blur(8px);border:1px solid #ffffff26;border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.35;max-width:min(300px,60vw)}
+.chip b{font:400 20px Georgia,serif;display:block;margin-bottom:2px}.chip span{opacity:.75}
+.bar{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:calc(100% - 24px);max-width:720px}
+button{font:inherit;font-size:14px;color:#fff;background:#0b1424b3;backdrop-filter:blur(8px);border:1px solid #ffffff2e;border-radius:999px;padding:10px 16px;cursor:pointer;touch-action:manipulation}
+button:hover,button.on{background:#d9b46a;color:#1b1406;border-color:#d9b46a}
+.cta{position:fixed;right:16px;top:14px;background:#d9b46a;color:#1b1406;border-color:#d9b46a;font-weight:600}
+.hint{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom));font-size:12px;opacity:.7;text-align:right;pointer-events:none}
+.tag{position:fixed;left:0;top:0;font-size:12px;white-space:nowrap;background:#0b1424c9;border:1px solid #ffffff30;border-radius:8px;padding:3px 8px;pointer-events:none;transform:translate(-50%,-130%);opacity:0;transition:opacity .3s}
+.note{position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom));font-size:11px;opacity:.6;max-width:min(320px,55vw);pointer-events:none}
+.floorbox{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0b1424c9;backdrop-filter:blur(8px);border:1px solid #ffffff2e;border-radius:16px;padding:10px 16px;display:grid;gap:6px;text-align:center;width:min(320px,86vw)}.floorbox b{font:400 22px Georgia,serif}.floorbox input{width:100%;accent-color:#d9b46a}.floorbox span{font-size:12px;opacity:.7}
+@media(max-width:600px){.light-mode{top:14px;right:12px}.chip{max-width:52vw}.floorbox{bottom:132px!important}.hint{display:none}.note{display:none}button{padding:9px 13px;font-size:13px}.cta{top:auto;bottom:calc(64px + env(safe-area-inset-bottom));right:12px}}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head><body>
+<div id="load"><b>The Divine</b><i><u id="lb"></u></i><span style="opacity:.6;font-size:13px">Loading 3D view</span></div>
+<div class="chip"><b>The Divine in 3D</b><span>Atun, Bhilwara. Drag to look around, scroll or pinch to zoom, right-drag to move.</span></div>
+<button class="cta" id="enter">Walk inside A-103</button>
+<div class="note">Artist's impression. Tower massing and landscaping are indicative. Map imagery: Esri, Maxar, Earthstar Geographics.</div>
+<div class="hint" id="hint">Drag to rotate</div>
+<div class="bar" id="bar">
+  <button data-v="drone" class="on">Fly in</button><button data-v="city">City</button><button data-v="site">The site</button><button data-v="tower">Tower</button><button data-v="top">Top view</button><button data-v="floor">Floor view</button>
+</div>
+<div class="floorbox" id="floorbox" hidden><b id="fl">Floor 1</b><input type="range" id="fr" min="1" max="14" value="1" aria-label="Floor"><span>Concept floor view · drag to look around.</span></div>
+<label class="light-mode">Atmosphere <select id="lightMode"><option value="day">Day</option><option value="evening">Evening</option></select></label><div id="tags"></div>
+<script type="module">
+function fail(){const panel=document.getElementById('load');if(!panel)return;panel.style.opacity=1;panel.replaceChildren();const box=document.createElement('div');box.className='error-panel';const title=document.createElement('h2');title.textContent='Explore another way';const text=document.createElement('p');text.textContent='The 3D scene could not load on this device. Floor plans and interiors are still available in the explorer.';const button=document.createElement('button');button.textContent='Open home preview';button.onclick=()=>{if(parent!==window)parent.postMessage({divine:'enter'},location.origin);else location.href='../#picker';};box.append(title,text,button);panel.append(box);}
+window.addEventListener('explorer-error',fail);
+window.addEventListener('unhandledrejection',fail);
+import('./app3d.js').catch(fail);
+</script>
+</body></html>

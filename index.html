@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>The Divine | Atun, Bhilwara</title>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="luxe.css?v=1">
+<link rel="stylesheet" href="experience.css">
+</head><body>
+
+<a class="skip-link" href="#picker">Skip to home selection</a><noscript><p class="no-js">Interactive previews need JavaScript. Brochure plans, project details and amenities remain below.</p></noscript>
+<div class="demo-tag">Private demo. Not for marketing.</div>
+<button class="top-cta" data-visit>Book a site visit</button>
+<nav class="nav" aria-label="Explore The Divine"><a href="#story" class="on">Tower</a><a href="#tour">Inside</a><a href="#picker">Flats</a><a href="#visit">Visit</a><button class="nav3d" id="open3d">Explore</button></nav>
+
+<section id="story">
+  <div class="stage">
+    <canvas id="rise"></canvas>
+    <div class="chapter" data-from="0" data-to=".05">
+      <p class="eyebrow">Atun, Bhilwara</p>
+      <h1 class="logo">The Divine</h1>
+      <p class="lead">Where Life Rises Above the Ordinary</p>
+      <p class="hero-facts">3 &amp; 4 BHK · Atun, Bhilwara</p><div class="row"><a class="btn" href="#picker">Find your home</a><button class="btn ghost" data-open-module="tower">Explore the project</button></div><p class="hint">Or scroll for the film</p>
+    </div>
+    <div class="chapter" data-from=".07" data-to=".14"><h2>It begins on<br>200 Feet Ring Road</h2><p>Near CA Circle, Atun.</p></div>
+    <div class="chapter" data-from=".17" data-to=".4"><h2>Two towers rise</h2><p>Block A and Block B. 3 and 4 BHK. 10 ft ceilings.</p></div>
+    <div class="chapter" data-from=".46" data-to=".6"><h2>Two towers.<br>One address.</h2><p>Joined by a bridge in the sky.</p></div>
+    <div class="chapter" data-from=".68" data-to="1.01"><h2 class="gold">Life rises here</h2><p>Keep scrolling. Step inside a home.</p><button class="btn" data-visit>Book a site visit</button></div>
+    <div class="note">Artist's impression, AI-assisted from the project render. Construction shown is illustrative.</div>
+    <div class="floorpick" id="floorPick" role="group" aria-label="Choose your floor">
+      <p class="eyebrow">Choose your floor</p>
+      <div class="fnum"><b id="fnum">01</b><span>of 14 (demo range)</span></div>
+      <input type="range" id="frange" min="1" max="14" value="1" aria-label="Floor">
+      <p class="small on-dark">Floor range is illustrative. Select a brochure plan next; inventory is not confirmed.</p>
+      <button class="btn" id="stepIn">Choose a plan</button>
+    </div>
+  </div>
+</section>
+
+<section id="tour">
+  <div class="stage">
+    <canvas id="tourCanvas"></canvas>
+        <div class="chapter" data-from=".03" data-to=".24"><h2>Sample A-103, 3 BHK</h2><p>Carpet 1,032.97 sq ft</p></div>
+    <div class="chapter" data-from=".41" data-to=".56"><h2>Drawing / Dining</h2><p>20′ × 14′6″</p></div>
+    <div class="chapter" data-from=".63" data-to=".74"><h2>Bedroom</h2><p>11′ × 13′</p></div>
+    <div class="chapter" data-from=".87" data-to="1.01"><h2>Second bedroom</h2><p>Like this home?</p><button class="btn" data-visit data-interest="A-103">Enquire about A-103</button></div>
+    <div class="note">Artist's impression, AI-assisted from the brochure. Décor indicative. Not an exact layout.</div>
+    <div class="unit-card" id="unitCard"><b>Sample A-103 · 3 BHK</b><span>Carpet 1,032.97 sq ft</span><button class="btn" data-visit data-interest="A-103">Enquire</button></div>
+    <div class="rooms-nav" id="roomsNav">
+      <a href="#picker">← Your selection</a><button data-room=".45">Living</button><button data-room=".72">Bedroom 1</button><button data-room=".94">Bedroom 2</button>
+    </div>
+  </div>
+</section>
+
+<section id="shell">
+  <div class="stage split">
+    <div class="phoneframe"><canvas id="shellCanvas"></canvas></div>
+    <div class="split-text">
+      <p class="eyebrow">From plan to home</p>
+      <h2>Bare concrete to a finished living room</h2>
+      <ol class="steps">
+        <li class="step" data-from="0" data-to=".3"><b>01</b><span>Bare concrete</span></li>
+        <li class="step" data-from=".3" data-to=".64"><b>02</b><span>The finishes go in</span></li>
+        <li class="step" data-from=".64" data-to="1.01"><b>03</b><span>It becomes a home</span></li>
+      </ol>
+      <button class="btn" data-visit>Book a site visit</button>
+    </div>
+    <div class="note">Artist's impression, AI-generated. Furniture and décor are indicative and not part of delivery. Specifications as per the Agreement for Sale.</div>
+  </div>
+</section>
+
+<section id="facts" class="dark">
+  <div class="wrap">
+    <p class="eyebrow reveal">The Divine at a glance</p>
+    <div class="stats stagger">
+      <div><b>2</b><span>towers, Block A and Block B</span></div>
+      <div><b>3 &amp; 4</b><span>BHK homes</span></div>
+      <div><b>1,003 – 1,539</b><span>sq ft carpet area</span></div>
+      <div><b>10 ft</b><span>ceiling height</span></div>
+      <div><b>16</b><span>homes on a typical floor</span></div>
+    </div>
+    <p class="small on-dark reveal">As per the project brochure. Carpet areas from the typical floor plans.</p>
+  </div>
+</section>
+
+<section id="home" class="dark">
+  <div class="wrap">
+    <p class="eyebrow reveal">A-103, 3 BHK. Carpet 1,032.97 sq ft</p>
+    <h2 class="title reveal">Turn it. See every room.</h2>
+    <div class="viewer reveal" id="viewer" tabindex="0" role="group" aria-label="Illustrative A-103 orbit. Drag or use left and right arrow keys.">
+      <canvas id="orbit"></canvas>
+      <div class="drag-hint" id="dragHint">Drag to rotate · illustrative</div>
+    </div>
+    <div class="row"><button class="btn ghost" id="rotateLeft" aria-label="Rotate left">← Rotate</button><button class="btn ghost" id="rotateRight" aria-label="Rotate right">Rotate →</button><button class="btn" data-open-module="plan">Check brochure layout</button></div>
+    <div class="plan-reference"><div><p class="eyebrow">The layout reference</p><h3>A-103 in the brochure</h3><p>The plan below is the source for room positions. The cinematic tour and rotating illustration are concept previews and can differ from this plan.</p><ul><li>Drawing / dining: 20′ × 14′6″</li><li>Two bedrooms: 11′ × 13′ each</li><li>Kitchen: 10′ × 8′</li></ul></div><svg viewBox="280 475 580 305" role="img" aria-label="Brochure crop showing the A-103 layout"><image href="assets/floor_a.jpg" width="1375" height="1638"/></svg></div>
+    <p class="small on-dark reveal">Artist's impression, AI-assisted from the brochure plan and renders. Furniture, décor and finishes are indicative and may not be part of delivery. Final specifications as per Agreement for Sale and RERA filing.</p>
+    <details class="deliv reveal"><summary>What is delivered, as per the brochure</summary>
+      <ul><li>Vitrified tiles (Kajaria / Johnson / Orient or equivalent). Anti-skid tiles in bathrooms.</li>
+      <li>Wooden doors and frames. Good quality interior paint.</li>
+      <li>Branded sink, counter top, ceramic dado up to 2 ft in the kitchen.</li>
+      <li>Modular switches, tube light and fan in each room.</li></ul></details>
+  </div>
+</section>
+
+<section id="picker" class="wrap">
+  <p class="eyebrow reveal">Find your home</p>
+  <h2 class="title reveal">Find the space that fits.</h2>
+  <p class="small">16 brochure plans. Floor range 1–14 is a demo, not confirmed inventory.</p>
+  <div class="selection-controls"><label>Block<select id="blockSelect"><option value="A">Block A</option><option value="B">Block B</option></select></label><label>Demo floor<select id="pickFloor"><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option></select></label><p id="selectionSummary" aria-live="polite"></p></div><p id="selectionStatus" role="status"></p>
+  <div class="filters reveal">
+    <div class="tabs" role="group" aria-label="Block">
+      <button class="tab on" data-block="A">Block A</button>
+      <button class="tab" data-block="B">Block B</button>
+    </div>
+    <div class="tabs chips" aria-label="Filter by BHK">
+      <button class="chip on" data-bhk="0">All</button>
+      <button class="chip" data-bhk="3">3 BHK</button>
+      <button class="chip" data-bhk="4">4 BHK</button>
+    </div>
+  </div>
+  <div class="pick-grid">
+    <div class="units stagger" id="units"></div>
+    <div class="detail reveal" id="detail"></div>
+  </div>
+  <div id="comparison" class="comparison" hidden></div>
+  <figure class="plan" id="planFigure"><h3 id="floorPlanName">Block A · typical floor plan</h3><div class="plan-board"><img id="floorImg" src="assets/floor_a.jpg" alt="Brochure typical floor plan with selectable unit references" loading="lazy"><div id="planMarkers"></div></div><figcaption>Select a numbered marker to inspect its plan. Markers locate brochure references, not measured unit boundaries.</figcaption></figure>
+</section>
+
+<section id="spaces" class="wrap">
+  <p class="eyebrow reveal">Inside The Divine</p>
+  <h2 class="title reveal">Spaces</h2>
+  <div class="cards stagger">
+    <figure><img src="assets/living.jpg" loading="lazy" alt="Living area"><figcaption>Living area</figcaption></figure>
+    <figure><img src="assets/bed.jpg" loading="lazy" alt="Master bedroom"><figcaption>Master bedroom</figcaption></figure>
+    <figure><img src="assets/pool.jpg" loading="lazy" alt="Swimming pool"><figcaption>Swimming pool</figcaption></figure>
+    <figure><img src="assets/top.jpg" loading="lazy" alt="Rooftop plan"><figcaption>Rooftop gardens</figcaption></figure>
+    <figure class="wide"><img src="assets/kitchen.jpg" loading="lazy" alt="Kitchen"><figcaption>Kitchen</figcaption></figure>
+  </div>
+  <ul class="amen stagger">
+    <li>Swimming pool and kids' pool</li><li>Gym and yoga</li><li>Community hall</li><li>Indoor games</li>
+    <li>Kids' play area</li><li>Guest rooms</li><li>Sauna, steam and jacuzzi</li><li>Badminton / pickleball court</li><li>Rooftop gardens on both towers</li>
+  </ul>
+  <p class="small reveal">Artist's impressions and amenities as per the brochure layout plan. Décor indicative.</p>
+</section>
+
+<section id="location" class="wrap">
+  <p class="eyebrow reveal">Location</p>
+  <h2 class="title reveal">Atun, on the 200 Feet Ring Road</h2>
+  <figure class="map reveal"><img src="assets/location.jpg" loading="lazy" alt="Location plan"><figcaption>Location plan from the brochure. Not to scale.</figcaption></figure>
+</section>
+
+<section id="visit" class="dark band">
+  <div class="wrap">
+    <p class="eyebrow reveal">Site visit</p>
+    <h2 class="title reveal">See it for yourself.</h2>
+    <p class="lead2 reveal">Choose your preferred time. This private demo previews your enquiry.</p>
+    <div class="row reveal">
+      <button class="btn" data-visit>Book a site visit</button>
+      <a class="btn ghost" data-wa hidden target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn ghost" data-call hidden>Call us</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="rera reveal"><img src="assets/qr.png" alt="RERA QR code" width="84" height="84">
+    <div><b>Brochure RERA No: RAJ/P/2026/5263</b><br>www.rera.rajasthan.gov.in · portal verification pending</div></div>
+  <p class="small reveal">Divyarth Realty LLP, Bhilwara. Architect: Space Grid Architects. Site: 1/555/A, Near CA Circle, 200 Feet Ring Road, Atun, Bhilwara.</p>
+</footer>
+
+<div class="view3d" id="view3d" role="dialog" aria-modal="true" aria-label="Project explorer" hidden>
+ <header class="hub-header"><div><b>The Divine · Explorer</b><p id="explorerSelection"></p></div><button id="close3d" class="hub-close" aria-label="Close explorer">×</button></header>
+ <nav class="hub-tabs" aria-label="Explorer modules"><button data-module="tower">Tower</button><button data-module="plan">Floor plan</button><button data-module="dollhouse">Dollhouse</button><button data-module="inside">Inside</button><button data-module="amenities">Amenities</button><button data-module="location">Location</button></nav>
+ <iframe id="frame3d" title="Illustrative tower and demo floor view" allow="fullscreen"></iframe><div id="hubContent" class="hub-content"></div>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <button class="x" id="mx" aria-label="Close">×</button>
+    <div id="mform">
+      <h3 id="mt">Book a site visit</h3>
+      <p class="small"><span id="enquiryMode">Private demo: no details are sent.</span></p>
+      <form id="vf">
+        <label>Name<input name="name" required autocomplete="name"></label>
+        <label>Mobile number<input name="mobile" required inputmode="tel" autocomplete="tel" maxlength="18" placeholder="10 digit number"></label>
+        <p id="enquirySelection" class="small"></p><label>Interested in<select name="interest" id="interest"></select></label>
+        <label>Preferred day<select name="when" id="visitDay"></select></label>
+        <label>Preferred time<select name="slot"><option>Morning, 10 am to 12 pm</option><option>Afternoon, 2 pm to 4 pm</option><option selected>Evening, 5 pm to 7 pm</option></select></label>
+        <label class="chk"><input type="checkbox" required> I agree to be contacted about The Divine.</label>
+        <p id="formError" role="alert"></p><button class="btn" id="submitVisit" type="submit">Preview enquiry</button>
+      </form>
+      <p class="small">Your selected plan and demo floor are included. Times are in India Standard Time.</p>
+    </div>
+    <div id="mok" hidden>
+      <h3 id="okTitle" tabindex="-1">Enquiry preview</h3>
+      <p id="okMsg"></p>
+      <button class="btn ghost" id="editEnquiry">Edit details</button>
+      <a class="btn ghost" data-wa hidden target="_blank" rel="noopener">Message on WhatsApp</a>
+    </div>
+    <p class="rera-line">Brochure RERA No: RAJ/P/2026/5263. www.rera.rajasthan.gov.in</p>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script type="module" src="experience.js"></script>
+</body></html>
