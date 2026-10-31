@@ -11,7 +11,7 @@ button:disabled{opacity:.55;cursor:wait}
 .demo-tag{color:#d0c5ac;letter-spacing:.1em}
 #aerial{height:240vh}#story{height:1100vh}#tour{height:900vh}#shell{height:320vh}
 .stage{background:#0b1424}
-.stage canvas{background-size:cover;background-position:center;filter:saturate(.9)}
+.stage canvas{background-size:cover;background-position:center;}
 .stage canvas[data-ready=true]{background-image:none!important}
 .chapter{top:20vh;max-width:min(600px,65vw)}
 .chapter h2{font-size:clamp(38px,5vw,70px)}

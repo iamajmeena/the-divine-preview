@@ -1,5 +1,5 @@
 import {FLATS,FRAMES,findFlat,selection,selectionLabel,normalizeMobile,visitDates,MARKERS} from './model.mjs';
-import {sequence} from './frames.mjs';
+import {sequence} from './frames.mjs?v=3';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const config=window.DIVINE_CONFIG||{}, systemMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let chosenMotion=null;try{chosenMotion=sessionStorage.getItem('divine-motion');}catch{}
@@ -7,7 +7,7 @@ let chosenMotion=null;try{chosenMotion=sessionStorage.getItem('divine-motion');}
 const motion={matches:chosenMotion==='calm'};
 const lenis=(!motion.matches&&window.Lenis)?new Lenis():null;
 const light=matchMedia('(max-width:900px)').matches||navigator.connection?.saveData||/2g/.test(navigator.connection?.effectiveType||'');
-const tier=light?'lq':'hq';
+const tier=(light||innerWidth<1700)?'lq':'hq';
 let state=selection(),bhk=0,comparisons=[],lastFocus=null,activeOverlay=null,currentModule='tower',hubSeq=null;
 try {state=selection(JSON.parse(sessionStorage.getItem('divine-selection')||'{}'));} catch {}
 const fmt=n=>n.toLocaleString('en-IN',{maximumFractionDigits:2,minimumFractionDigits:2});

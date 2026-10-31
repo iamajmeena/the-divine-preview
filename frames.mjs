@@ -2,7 +2,7 @@
 let active = 0;
 const queue = [];
 function dispatch() {
- while (active < 4 && queue.length) {
+ while (active < 6 && queue.length) {
   const job = queue.shift();
   if (!job.valid()) { job.cancel(); continue; }
   active++;
@@ -13,7 +13,7 @@ export function sequence(canvas, name, count, {tier='lq',fit=false,onReady=()=>{
  const ctx = canvas.getContext('2d');
  const cache = new Map(), pending = new Set(), failures = new Set();
  let target=0, shown=0, near=false, dirty=true, epoch=0, disposed=false;
- const cap=tier==='lq'?18:24, radius=reduced?0:5;
+ const cap=tier==='lq'?64:44, radius=reduced?0:18;
  const metrics={name,requests:0,failed:0,get cached(){return cache.size;},get pending(){return pending.size;}};
  const url=i=>`frames/${tier}/${name}/${String(i+1).padStart(3,'0')}.webp`;
  function evict() {
